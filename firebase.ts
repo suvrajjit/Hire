@@ -1,17 +1,18 @@
-import { initializeApp } from "firebase/app";
+/// <reference types="vite/client" />
+import { initializeApp } from 'firebase/app';
 import { getAnalytics } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
 import { getDatabase } from "firebase/database";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBhysbsfzayPCqlAz4tp0CKIj5h13p3iGA",
-  authDomain: "thematic-d0e45.firebaseapp.com",
-  databaseURL: "https://thematic-d0e45-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "thematic-d0e45",
-  storageBucket: "thematic-d0e45.firebasestorage.app",
-  messagingSenderId: "117217514082",
-  appId: "1:117217514082:web:b63729eaeb8df0b138f73b",
-  measurementId: "G-P0X09B0YLP"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
+  databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL
 };
 
 const app = initializeApp(firebaseConfig);

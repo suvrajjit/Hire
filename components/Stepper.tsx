@@ -17,6 +17,7 @@ interface StepperProps extends HTMLAttributes<HTMLDivElement> {
   disableStepIndicators?: boolean;
   hideFooterOnLastStep?: boolean;
   hideFooterOnSteps?: number[];
+  hideHeader?: boolean;
   renderStepIndicator?: (props: {
     step: number;
     currentStep: number;
@@ -41,6 +42,7 @@ export default function Stepper({
   disableStepIndicators = false,
   hideFooterOnLastStep = false,
   hideFooterOnSteps = [],
+  hideHeader = false,
   renderStepIndicator,
   externalStep,
   ...rest
@@ -103,42 +105,44 @@ export default function Stepper({
         className={`mx-auto w-full max-w-4xl rounded-2xl shadow-[0_0_30px_rgba(0,255,255,0.1)] ${stepCircleContainerClassName}`}
         style={{ border: '1px solid rgba(255,255,255,0.1)' }}
       >
-        <div className={`${stepContainerClassName} flex w-full items-center p-8`}>
-          {stepsArray.map((_, index) => {
-            const stepNumber = index + 1;
-            const isNotLastStep = index < totalSteps - 1;
-            return (
-              <React.Fragment key={stepNumber}>
-                {renderStepIndicator ? (
-                  renderStepIndicator({
-                    step: stepNumber,
-                    currentStep,
-                    onStepClick: clicked => {
-                      // Prevent clicking future steps if indicators are disabled or logic requires sequential flow
-                      if (!disableStepIndicators) {
-                         setDirection(clicked > currentStep ? 1 : -1);
-                         updateStep(clicked);
+        {!hideHeader && (
+          <div className={`${stepContainerClassName} flex w-full items-center p-8`}>
+            {stepsArray.map((_, index) => {
+              const stepNumber = index + 1;
+              const isNotLastStep = index < totalSteps - 1;
+              return (
+                <React.Fragment key={stepNumber}>
+                  {renderStepIndicator ? (
+                    renderStepIndicator({
+                      step: stepNumber,
+                      currentStep,
+                      onStepClick: clicked => {
+                        // Prevent clicking future steps if indicators are disabled or logic requires sequential flow
+                        if (!disableStepIndicators) {
+                          setDirection(clicked > currentStep ? 1 : -1);
+                          updateStep(clicked);
+                        }
                       }
-                    }
-                  })
-                ) : (
-                  <StepIndicator
-                    step={stepNumber}
-                    disableStepIndicators={disableStepIndicators}
-                    currentStep={currentStep}
-                    onClickStep={clicked => {
-                      if (!disableStepIndicators) {
-                        setDirection(clicked > currentStep ? 1 : -1);
-                        updateStep(clicked);
-                      }
-                    }}
-                  />
-                )}
-                {isNotLastStep && <StepConnector isComplete={currentStep > stepNumber} />}
-              </React.Fragment>
-            );
-          })}
-        </div>
+                    })
+                  ) : (
+                    <StepIndicator
+                      step={stepNumber}
+                      disableStepIndicators={disableStepIndicators}
+                      currentStep={currentStep}
+                      onClickStep={clicked => {
+                        if (!disableStepIndicators) {
+                          setDirection(clicked > currentStep ? 1 : -1);
+                          updateStep(clicked);
+                        }
+                      }}
+                    />
+                  )}
+                  {isNotLastStep && <StepConnector isComplete={currentStep > stepNumber} />}
+                </React.Fragment>
+              );
+            })}
+          </div>
+        )}
 
         <StepContentWrapper
           isCompleted={isCompleted}
@@ -219,6 +223,7 @@ interface SlideTransitionProps {
   children: ReactNode;
   direction: number;
   onHeightReady: (height: number) => void;
+  key?: React.Key;
 }
 
 function SlideTransition({ children, direction, onHeightReady }: SlideTransitionProps) {
@@ -345,7 +350,9 @@ function StepConnector({ isComplete }: StepConnectorProps) {
   );
 }
 
-interface CheckIconProps extends React.SVGProps<SVGSVGElement> {}
+interface CheckIconProps extends React.SVGProps<SVGSVGElement> {
+  className?: string;
+}
 
 function CheckIcon(props: CheckIconProps) {
   return (

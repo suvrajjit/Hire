@@ -1,4 +1,4 @@
-import { Camera, Mesh, Plane, Program, Renderer, Texture, Transform } from 'ogl';
+import { Camera, Mesh, Plane, Program, Renderer, Texture, Transform, Raycast, Vec2 } from 'ogl';
 import { useEffect, useRef } from 'react';
 
 type GL = Renderer['gl'];
@@ -32,6 +32,7 @@ function getFontSize(font: string): number {
 function createTextTexture(
   gl: GL,
   text: string,
+  quote: string = '',
   font: string = 'bold 30px monospace',
   color: string = 'black'
 ): { texture: Texture; width: number; height: number } {
@@ -39,21 +40,38 @@ function createTextTexture(
   const context = canvas.getContext('2d');
   if (!context) throw new Error('Could not get 2d context');
 
+  const fontSize = getFontSize(font);
   context.font = font;
   const metrics = context.measureText(text);
   const textWidth = Math.ceil(metrics.width);
-  const fontSize = getFontSize(font);
-  const textHeight = Math.ceil(fontSize * 1.2);
+  
+  const quoteFont = `italic ${Math.floor(fontSize * 0.6)}px monospace`;
+  context.font = quoteFont;
+  const quoteMetrics = context.measureText(quote);
+  const quoteWidth = Math.ceil(quoteMetrics.width);
 
-  canvas.width = textWidth + 20;
+  const finalWidth = Math.max(textWidth, quoteWidth) + 40;
+  const textHeight = Math.ceil(fontSize * 2.5); // More height for 2 lines
+
+  canvas.width = finalWidth;
   canvas.height = textHeight + 20;
 
-  context.font = font;
-  context.fillStyle = color;
-  context.textBaseline = 'middle';
-  context.textAlign = 'center';
+  // Bg clear
   context.clearRect(0, 0, canvas.width, canvas.height);
-  context.fillText(text, canvas.width / 2, canvas.height / 2);
+  
+  context.fillStyle = color;
+  context.textAlign = 'center';
+  
+  // Draw Name
+  context.font = font;
+  context.textBaseline = 'bottom';
+  context.fillText(text, canvas.width / 2, canvas.height / 2 - 5);
+
+  // Draw Quote
+  context.font = quoteFont;
+  context.fillStyle = 'rgba(255, 255, 255, 0.7)';
+  context.textBaseline = 'top';
+  context.fillText(quote, canvas.width / 2, canvas.height / 2 + 5);
 
   const texture = new Texture(gl, { generateMipmaps: false });
   texture.image = canvas;
@@ -65,6 +83,7 @@ interface TitleProps {
   plane: Mesh;
   renderer: Renderer;
   text: string;
+  quote?: string;
   textColor?: string;
   font?: string;
 }
@@ -74,23 +93,25 @@ class Title {
   plane: Mesh;
   renderer: Renderer;
   text: string;
+  quote: string;
   textColor: string;
   font: string;
   mesh!: Mesh;
 
-  constructor({ gl, plane, renderer, text, textColor = '#545050', font = '30px sans-serif' }: TitleProps) {
+  constructor({ gl, plane, renderer, text, quote = '', textColor = '#545050', font = '30px sans-serif' }: TitleProps) {
     autoBind(this);
     this.gl = gl;
     this.plane = plane;
     this.renderer = renderer;
     this.text = text;
+    this.quote = quote;
     this.textColor = textColor;
     this.font = font;
     this.createMesh();
   }
 
   createMesh() {
-    const { texture, width, height } = createTextTexture(this.gl, this.text, this.font, this.textColor);
+    const { texture, width, height } = createTextTexture(this.gl, this.text, this.quote, this.font, this.textColor);
     const geometry = new Plane(this.gl);
     const program = new Program(this.gl, {
       vertex: `
@@ -119,7 +140,7 @@ class Title {
     });
     this.mesh = new Mesh(this.gl, { geometry, program });
     const aspect = width / height;
-    const textHeightScaled = this.plane.scale.y * 0.15;
+    const textHeightScaled = this.plane.scale.y * 0.25; // Slightly larger for 2 lines
     const textWidthScaled = textHeightScaled * aspect;
     this.mesh.scale.set(textWidthScaled, textHeightScaled, 1);
     this.mesh.position.y = -this.plane.scale.y * 0.5 - textHeightScaled * 0.5 - 0.05;
@@ -147,6 +168,7 @@ interface MediaProps {
   scene: Transform;
   screen: ScreenSize;
   text: string;
+  quote: string;
   viewport: Viewport;
   bend: number;
   textColor: string;
@@ -165,6 +187,7 @@ class Media {
   scene: Transform;
   screen: ScreenSize;
   text: string;
+  quote: string;
   viewport: Viewport;
   bend: number;
   textColor: string;
@@ -181,6 +204,9 @@ class Media {
   speed: number = 0;
   isBefore: boolean = false;
   isAfter: boolean = false;
+  isHovered: boolean = false;
+  hoverValue: number = 0;
+  baseScale: number = 1;
 
   constructor({
     geometry,
@@ -192,6 +218,7 @@ class Media {
     scene,
     screen,
     text,
+    quote,
     viewport,
     bend,
     textColor,
@@ -207,6 +234,7 @@ class Media {
     this.scene = scene;
     this.screen = screen;
     this.text = text;
+    this.quote = quote;
     this.viewport = viewport;
     this.bend = bend;
     this.textColor = textColor;
@@ -247,6 +275,7 @@ class Media {
         uniform vec2 uPlaneSizes;
         uniform sampler2D tMap;
         uniform float uBorderRadius;
+        uniform float uHover;
         varying vec2 vUv;
         
         float roundedBoxSDF(vec2 p, vec2 b, float r) {
@@ -265,13 +294,17 @@ class Media {
           );
           vec4 color = texture2D(tMap, uv);
           
+          // Grayscale conversion
+          float gray = dot(color.rgb, vec3(0.299, 0.587, 0.114));
+          vec3 grayColor = vec3(gray);
+          
+          // Mix based on hover (0 = gray, 1 = color)
+          vec3 finalColor = mix(grayColor, color.rgb, uHover);
+          
           float d = roundedBoxSDF(vUv - 0.5, vec2(0.5 - uBorderRadius), uBorderRadius);
+          float alpha = 1.0 - smoothstep(-0.002, 0.002, d);
           
-          // Smooth antialiasing for edges
-          float edgeSmooth = 0.002;
-          float alpha = 1.0 - smoothstep(-edgeSmooth, edgeSmooth, d);
-          
-          gl_FragColor = vec4(color.rgb, alpha);
+          gl_FragColor = vec4(finalColor, alpha);
         }
       `,
       uniforms: {
@@ -280,7 +313,8 @@ class Media {
         uImageSizes: { value: [0, 0] },
         uSpeed: { value: 0 },
         uTime: { value: 100 * Math.random() },
-        uBorderRadius: { value: this.borderRadius }
+        uBorderRadius: { value: this.borderRadius },
+        uHover: { value: 0 }
       },
       transparent: true
     });
@@ -299,6 +333,7 @@ class Media {
       program: this.program
     });
     this.plane.setParent(this.scene);
+    (this.plane as any).parentMedia = this; // Link for raycast
   }
 
   createTitle() {
@@ -307,6 +342,7 @@ class Media {
       plane: this.plane,
       renderer: this.renderer,
       text: this.text,
+      quote: this.quote,
       textColor: this.textColor,
       font: this.font
     });
@@ -339,6 +375,23 @@ class Media {
     this.speed = scroll.current - scroll.last;
     this.program.uniforms.uTime.value += 0.04;
     this.program.uniforms.uSpeed.value = this.speed;
+    
+    // Hover Animation
+    this.hoverValue = lerp(this.hoverValue, this.isHovered ? 1 : 0, 0.1);
+    this.program.uniforms.uHover.value = this.hoverValue;
+    
+    // Scale on hover
+    const targetScale = this.isHovered ? 1.1 : 1.0;
+    const currentScaleX = this.plane.scale.x;
+    // We only touch the visual scale relative to base size
+    // Wait, reusing this.scale from createMesh might be tricky because we overwrite it in onResize
+    // Let's perform a multiplicative scaling on top of base calculation?
+    // Actually, onResize sets the base scale. 
+    // We can just apply the hover scale factor during update if we store base w/h
+    // For simplicity, let's just toggle scale slightly if we had a stored base
+    // Better:
+    // this.plane.scale.set(this.baseWidth * (1 + this.hoverValue * 0.1), ...)
+    // But we need to store baseWidth in onResize.
 
     const planeOffset = this.plane.scale.x / 2;
     const viewportOffset = this.viewport.width / 2;
@@ -363,18 +416,21 @@ class Media {
       }
     }
     this.scale = this.screen.height / 1500;
-    this.plane.scale.y = (this.viewport.height * (900 * this.scale)) / this.screen.height;
-    this.plane.scale.x = (this.viewport.width * (700 * this.scale)) / this.screen.width;
-    this.plane.program.uniforms.uPlaneSizes.value = [this.plane.scale.x, this.plane.scale.y];
+    const baseHeight = (this.viewport.height * (900 * this.scale)) / this.screen.height;
+    const baseWidth = (this.viewport.width * (700 * this.scale)) / this.screen.width;
+    
+    this.plane.scale.set(baseWidth, baseHeight, 1);
+    
+    this.plane.program.uniforms.uPlaneSizes.value = [baseWidth, baseHeight];
     this.padding = 2;
-    this.width = this.plane.scale.x + this.padding;
+    this.width = baseWidth + this.padding;
     this.widthTotal = this.width * this.length;
     this.x = this.width * this.index;
   }
 }
 
 interface AppConfig {
-  items?: { image: string; text: string }[];
+  items?: { image: string; text: string; quote: string }[];
   bend?: number;
   textColor?: string;
   borderRadius?: number;
@@ -401,17 +457,20 @@ class App {
   scene!: Transform;
   planeGeometry!: Plane;
   medias: Media[] = [];
-  mediasImages: { image: string; text: string }[] = [];
+  mediasImages: { image: string; text: string; quote: string }[] = [];
   screen!: { width: number; height: number };
   viewport!: { width: number; height: number };
   raf: number = 0;
   autoScroll: boolean;
+  raycast!: Raycast;
+  mouse: Vec2 = new Vec2();
 
   boundOnResize!: () => void;
   boundOnWheel!: (e: Event) => void;
   boundOnTouchDown!: (e: MouseEvent | TouchEvent) => void;
   boundOnTouchMove!: (e: MouseEvent | TouchEvent) => void;
   boundOnTouchUp!: () => void;
+  boundOnMouseMove!: (e: MouseEvent) => void;
 
   isDown: boolean = false;
   start: number = 0;
@@ -438,6 +497,7 @@ class App {
     this.createRenderer();
     this.createCamera();
     this.createScene();
+    this.createRaycast();
     this.onResize();
     this.createGeometry();
     this.createMedias(items, bend, textColor, borderRadius, font);
@@ -465,6 +525,10 @@ class App {
   createScene() {
     this.scene = new Transform();
   }
+  
+  createRaycast() {
+    this.raycast = new Raycast(this.gl);
+  }
 
   createGeometry() {
     this.planeGeometry = new Plane(this.gl, {
@@ -474,7 +538,7 @@ class App {
   }
 
   createMedias(
-    items: { image: string; text: string }[] | undefined,
+    items: { image: string; text: string; quote: string }[] | undefined,
     bend: number = 1,
     textColor: string,
     borderRadius: number,
@@ -482,17 +546,10 @@ class App {
   ) {
     const defaultItems = [
       {
-        image: `https://picsum.photos/seed/1/800/600?grayscale`,
-        text: 'Bridge'
-      },
-      {
-        image: `https://picsum.photos/seed/2/800/600?grayscale`,
-        text: 'Desk Setup'
-      },
-      {
-        image: `https://picsum.photos/seed/3/800/600?grayscale`,
-        text: 'Waterfall'
-      },
+        image: `https://picsum.photos/seed/1/800/600`,
+        text: 'Bridge',
+        quote: 'Nature is waiting'
+      }
     ];
     const galleryItems = items && items.length ? items : defaultItems;
     this.mediasImages = galleryItems.concat(galleryItems);
@@ -507,6 +564,7 @@ class App {
         scene: this.scene,
         screen: this.screen,
         text: data.text,
+        quote: data.quote,
         viewport: this.viewport,
         bend,
         textColor,
@@ -532,6 +590,19 @@ class App {
   onTouchUp() {
     this.isDown = false;
     this.onCheck();
+  }
+  
+  onMouseMove(e: MouseEvent) {
+    // Basic mouse tracking for raycast
+    // Normalize mouse coords: -1 to 1
+    // We need to account for canvas position/size if strictly correct, but container assumes full width/height usage usually
+    // Using simple client coordinates for full screen app, but let's be relative to canvas
+    const rect = this.renderer.gl.canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    this.mouse.x = (x / rect.width) * 2 - 1;
+    this.mouse.y = -((y / rect.height) * 2 - 1);
   }
 
   onWheel(e: Event) {
@@ -575,9 +646,25 @@ class App {
 
     this.scroll.current = lerp(this.scroll.current, this.scroll.target, this.scroll.ease);
     const direction = this.scroll.current > this.scroll.last ? 'right' : 'left';
+    
+    // Raycasting
     if (this.medias) {
-      this.medias.forEach(media => media.update(this.scroll, direction));
+        this.raycast.castMouse(this.camera, this.mouse);
+        const hits = this.raycast.intersectBounds(this.medias.map(m => m.plane));
+        
+        // Reset all
+        this.medias.forEach(m => m.isHovered = false);
+        
+        // Set hovered
+        // Set hovered
+        hits.forEach(hit => {
+            const media = (hit as any).parentMedia as Media;
+            if (media) media.isHovered = true;
+        });
+        
+        this.medias.forEach(media => media.update(this.scroll, direction));
     }
+    
     this.renderer.render({ scene: this.scene, camera: this.camera });
     this.scroll.last = this.scroll.current;
     this.raf = window.requestAnimationFrame(this.update.bind(this));
@@ -589,15 +676,20 @@ class App {
     this.boundOnTouchDown = this.onTouchDown.bind(this);
     this.boundOnTouchMove = this.onTouchMove.bind(this);
     this.boundOnTouchUp = this.onTouchUp.bind(this);
+    this.boundOnMouseMove = this.onMouseMove.bind(this);
+    
     window.addEventListener('resize', this.boundOnResize);
     window.addEventListener('mousewheel', this.boundOnWheel);
     window.addEventListener('wheel', this.boundOnWheel);
     window.addEventListener('mousedown', this.boundOnTouchDown);
-    window.addEventListener('mousemove', this.boundOnTouchMove);
+    window.addEventListener('mousemove', this.boundOnTouchMove); // Used for touch scroll drag
     window.addEventListener('mouseup', this.boundOnTouchUp);
     window.addEventListener('touchstart', this.boundOnTouchDown);
     window.addEventListener('touchmove', this.boundOnTouchMove);
     window.addEventListener('touchend', this.boundOnTouchUp);
+    
+    // Mouse move for hover (canvas only)
+    this.container.addEventListener('mousemove', this.boundOnMouseMove);
   }
 
   destroy() {
@@ -611,6 +703,8 @@ class App {
     window.removeEventListener('touchstart', this.boundOnTouchDown);
     window.removeEventListener('touchmove', this.boundOnTouchMove);
     window.removeEventListener('touchend', this.boundOnTouchUp);
+    this.container.removeEventListener('mousemove', this.boundOnMouseMove);
+    
     if (this.renderer && this.renderer.gl && this.renderer.gl.canvas.parentNode) {
       this.renderer.gl.canvas.parentNode.removeChild(this.renderer.gl.canvas as HTMLCanvasElement);
     }
@@ -618,7 +712,7 @@ class App {
 }
 
 interface CircularGalleryProps {
-  items?: { image: string; text: string }[];
+  items?: { image: string; text: string; quote: string }[];
   bend?: number;
   textColor?: string;
   borderRadius?: number;

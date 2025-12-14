@@ -1,0 +1,1293 @@
+﻿node.exe : npm 
+verbose cli 
+C:\Program Files\nod
+ejs\node.exe 
+C:\Program Files\nod
+ejs\node_modules\npm
+\bin\npm-cli.js
+At line:1 char:1
++ & "C:\Program File
+s\nodejs/node.exe" 
+"C:\Program Files\no
+dejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~
+    + CategoryInfo  
+            : NotS  
+  pecified: (npm    
+ verbose cli...\    
+bin\npm-cli.js:    
+String) [], Rem    
+oteException
+    + FullyQualifie 
+   dErrorId : Nati  
+  veCommandError
+ 
+npm info using 
+npm@10.9.3
+npm info using 
+node@v22.20.0
+npm verbose title 
+npm install
+npm verbose argv 
+"install" 
+"--loglevel" 
+"verbose"
+npm verbose logfile 
+logs-max:10 dir:C:\U
+sers\suvra\AppData\L
+ocal\npm-cache\_logs
+\2025-12-13T07_44_09
+_031Z-
+npm verbose logfile 
+C:\Users\suvra\AppDa
+ta\Local\npm-cache\_
+logs\2025-12-13T07_4
+4_09_031Z-debug-0.lo
+g
+npm http cache https
+://registry.npmjs.or
+g/react 19ms (cache 
+hit)
+npm http cache https
+://registry.npmjs.or
+g/react-dom 18ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/ogl 7ms (cache 
+hit)
+npm http cache https
+://registry.npmjs.or
+g/lenis 5ms (cache 
+hit)
+npm http cache https
+://registry.npmjs.or
+g/@nuxt%2fkit 8ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/vue 8ms (cache 
+hit)
+npm http cache https
+://registry.npmjs.or
+g/typescript 19ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/framer-motion 
+21ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/gsap 6ms (cache 
+hit)
+npm http cache https
+://registry.npmjs.or
+g/@google%2fgenai 
+4ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/firebase 33ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@types%2fnode 
+18ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@vitejs%2fplugin-r
+eact 7ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/vite 70ms (cache 
+hit)
+npm http cache https
+://registry.npmjs.or
+g/less 7ms (cache 
+hit)
+npm http cache https
+://registry.npmjs.or
+g/lightningcss 5ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/sass 6ms (cache 
+hit)
+npm http cache https
+://registry.npmjs.or
+g/sass-embedded 5ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/stylus 7ms (cache 
+hit)
+npm http cache https
+://registry.npmjs.or
+g/sugarss 4ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/postcss 4ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/terser 5ms (cache 
+hit)
+npm http cache https
+://registry.npmjs.or
+g/fsevents 20ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@rolldown%2fplugin
+utils 23ms (cache 
+hit)
+npm http cache https
+://registry.npmjs.or
+g/@babel%2fplugin-tr
+ansform-react-jsx-so
+urce 25ms (cache 
+hit)
+npm http cache https
+://registry.npmjs.or
+g/undici-types 28ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@babel%2fcore 
+31ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/react-refresh 
+42ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2fapp 
+100ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@babel%2fplugin-tr
+ansform-react-jsx-se
+lf 143ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/rollup 150ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@types%2fbabel__co
+re 179ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2fdataba
+se 191ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2fstorag
+e 243ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/esbuild 306ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2fauth 
+323ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2futil 
+378ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2fapp-ty
+pes 427ms (cache 
+hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2fapp-ch
+eck 472ms (cache 
+hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2fanalyt
+ics 509ms (cache 
+hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2ffuncti
+ons 544ms (cache 
+hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2ffirest
+ore 608ms (cache 
+hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2fapp-co
+mpat 585ms (cache 
+hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2fauth-c
+ompat 602ms (cache 
+hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2fperfor
+mance 602ms (cache 
+hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2fmessag
+ing 733ms (cache 
+hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2fdata-c
+onnect 706ms (cache 
+hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2finstal
+lations 668ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2fremote
+-config 636ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2fstorag
+e-compat 660ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2fanalyt
+ics-compat 577ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2fdataba
+se-compat 646ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2fvertex
+ai-preview 347ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2fapp-ch
+eck-compat 587ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2fmessag
+ing-compat 483ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2ffirest
+ore-compat 597ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2ffuncti
+ons-compat 577ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2finstal
+lations-compat 
+394ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2fperfor
+mance-compat 442ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2fremote
+-config-compat 
+408ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/tslib 344ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@emotion%2fis-prop
+-valid 338ms (cache 
+hit)
+npm http cache https
+://registry.npmjs.or
+g/loose-envify 
+300ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/loose-envify 
+243ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/scheduler 274ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@babel%2fhelper-mo
+dule-transforms 
+17ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@jridgewell%2frema
+pping 19ms (cache 
+hit)
+npm http cache https
+://registry.npmjs.or
+g/@babel%2fcode-fram
+e 20ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@babel%2ftraverse 
+21ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@babel%2fhelpers 
+23ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@babel%2fparser 
+26ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/gensync 30ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/convert-source-map
+ 30ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@babel%2ftemplate 
+31ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@babel%2fgenerator
+ 33ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/json5 34ms (cache 
+hit)
+npm http cache https
+://registry.npmjs.or
+g/@babel%2ftypes 
+35ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/debug 39ms (cache 
+hit)
+npm http cache https
+://registry.npmjs.or
+g/semver 42ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@babel%2fhelper-co
+mpilation-targets 
+45ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@babel%2ftypes 
+32ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@types%2fbabel__te
+mplate 29ms (cache 
+hit)
+npm http cache https
+://registry.npmjs.or
+g/@babel%2fhelper-pl
+ugin-utils 37ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@babel%2fhelper-pl
+ugin-utils 37ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@types%2fbabel__ge
+nerator 28ms (cache 
+hit)
+npm http cache https
+://registry.npmjs.or
+g/@types%2fbabel__tr
+averse 29ms (cache 
+hit)
+npm http cache https
+://registry.npmjs.or
+g/@babel%2fparser 
+37ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/picocolors 20ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@babel%2fhelper-va
+lidator-identifier 
+21ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/jsesc 22ms (cache 
+hit)
+npm http cache https
+://registry.npmjs.or
+g/@jridgewell%2fgen-
+mapping 24ms (cache 
+hit)
+npm http cache https
+://registry.npmjs.or
+g/lru-cache 25ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@babel%2fcompat-da
+ta 27ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@jridgewell%2ftrac
+e-mapping 28ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/browserslist 30ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/js-tokens 34ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@babel%2fhelper-st
+ring-parser 31ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@babel%2fhelper-va
+lidator-option 34ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@babel%2fhelper-mo
+dule-imports 35ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@babel%2fhelper-va
+lidator-identifier 
+34ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@babel%2fhelper-va
+lidator-identifier 
+34ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@babel%2fhelper-gl
+obals 36ms (cache 
+hit)
+npm http cache https
+://registry.npmjs.or
+g/@jridgewell%2ftrac
+e-mapping 24ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@jridgewell%2fgen-
+mapping 26ms (cache 
+hit)
+npm http cache https
+://registry.npmjs.or
+g/ms 24ms (cache 
+hit)
+npm http cache https
+://registry.npmjs.or
+g/@jridgewell%2fsour
+cemap-codec 8ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@jridgewell%2freso
+lve-uri 8ms (cache 
+hit)
+npm http cache https
+://registry.npmjs.or
+g/@jridgewell%2fsour
+cemap-codec 9ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/baseline-browser-m
+apping 6ms (cache 
+hit)
+npm http cache https
+://registry.npmjs.or
+g/caniuse-lite 10ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/electron-to-chromi
+um 20ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/yallist 37ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/update-browserslis
+t-db 38ms (cache 
+hit)
+npm http cache https
+://registry.npmjs.or
+g/node-releases 
+39ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/escalade 3ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@react-native-asyn
+c-storage%2fasync-st
+orage 4ms (cache 
+hit)
+npm http cache https
+://registry.npmjs.or
+g/react-native 22ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@types%2freact 
+13ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/react 14ms (cache 
+hit)
+npm http cache https
+://registry.npmjs.or
+g/idb 25ms (cache 
+hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2fanalyt
+ics-types 34ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2fcompon
+ent 65ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2fcompon
+ent 130ms (cache 
+hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2fcompon
+ent 164ms (cache 
+hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2fapp-ch
+eck-types 197ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2fcompon
+ent 214ms (cache 
+hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2flogger
+ 254ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/undici 284ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2flogger
+ 301ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2flogger
+ 341ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2fcompon
+ent 401ms (cache 
+hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2fcompon
+ent 439ms (cache 
+hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2flogger
+ 468ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2flogger
+ 510ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/undici 456ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2fcompon
+ent 533ms (cache 
+hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2fauth-i
+nterop-types 420ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2flogger
+ 455ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2flogger
+ 679ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2fauth-i
+nterop-types 468ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2fapp-ch
+eck-interop-types 
+481ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2fdataba
+se-types 466ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/faye-websocket 
+582ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2fauth-t
+ypes 679ms (cache 
+hit)
+npm http cache https
+://registry.npmjs.or
+g/@grpc%2fproto-load
+er 447ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@grpc%2fgrpc-js 
+481ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2fwebcha
+nnel-wrapper 427ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2fauth-i
+nterop-types 359ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2ffirest
+ore-types 447ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2fapp-ch
+eck-interop-types 
+405ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2fremote
+-config-types 214ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2finstal
+lations-types 339ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2fperfor
+mance-types 292ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2ffuncti
+ons-types 450ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2fstorag
+e-types 303ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2fmessag
+ing-interop-types 
+526ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2fmessag
+ing-interop-types 
+416ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2fapp 
+19ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@firebase%2fapp-ty
+pes 14ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/websocket-driver 
+9ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/yargs 12ms (cache 
+hit)
+npm http cache https
+://registry.npmjs.or
+g/long 17ms (cache 
+hit)
+npm http cache https
+://registry.npmjs.or
+g/lodash.camelcase 
+17ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/protobufjs 19ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@protobufjs%2faspr
+omise 25ms (cache 
+hit)
+npm http cache https
+://registry.npmjs.or
+g/@protobufjs%2fcode
+gen 27ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@protobufjs%2fbase
+64 28ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@protobufjs%2feven
+temitter 28ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@protobufjs%2futf8
+ 28ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@protobufjs%2finqu
+ire 28ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@protobufjs%2fpath
+ 29ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@protobufjs%2ffetc
+h 29ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/get-caller-file 
+27ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/string-width 29ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@protobufjs%2ffloa
+t 30ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/cliui 30ms (cache 
+hit)
+npm http cache https
+://registry.npmjs.or
+g/y18n 31ms (cache 
+hit)
+npm http cache https
+://registry.npmjs.or
+g/@protobufjs%2fpool
+ 32ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/yargs-parser 32ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/require-directory 
+14ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/websocket-extensio
+ns 4ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/http-parser-js 
+6ms (cache hit)
+npm http cache https
+://registry.npmjs.or
+g/safe-buffer 7ms 
+(cache hit)
+npm http cache https
+://registry.npmjs.or
+g/@emotion%2fmemoize
+ 3ms (cache hit)
+npm http fetch GET 
+200 https://registry
+.npmjs.org/@esbuild%
+2faix-ppc64 258ms 
+(cache revalidated)
+npm http fetch GET 
+200 https://registry
+.npmjs.org/@esbuild%
+2flinux-arm 263ms 
+(cache revalidated)
+npm http fetch GET 
+200 https://registry
+.npmjs.org/@esbuild%
+2flinux-ia32 271ms 
+(cache revalidated)
+npm http fetch GET 
+200 https://registry
+.npmjs.org/@esbuild%
+2fnetbsd-x64 273ms 
+(cache revalidated)
+npm http fetch GET 
+200 https://registry
+.npmjs.org/@esbuild%
+2flinux-x64 274ms 
+(cache revalidated)
+npm http fetch GET 
+200 https://registry
+.npmjs.org/@esbuild%
+2fwin32-ia32 280ms 
+(cache revalidated)
+npm http fetch GET 
+200 https://registry
+.npmjs.org/@esbuild%
+2fandroid-arm 281ms 
+(cache revalidated)
+npm http fetch GET 
+200 https://registry
+.npmjs.org/@esbuild%
+2fwin32-x64 284ms 
+(cache revalidated)
+npm http fetch GET 
+200 https://registry
+.npmjs.org/@esbuild%
+2fsunos-x64 285ms 
+(cache revalidated)
+npm http fetch GET 
+200 https://registry
+.npmjs.org/@esbuild%
+2fdarwin-x64 286ms 
+(cache revalidated)
+npm http fetch GET 
+200 https://registry
+.npmjs.org/@esbuild%
+2flinux-s390x 287ms 
+(cache revalidated)
+npm http fetch GET 
+200 https://registry
+.npmjs.org/@esbuild%
+2flinux-ppc64 288ms 
+(cache revalidated)
+npm http fetch GET 
+200 https://registry
+.npmjs.org/@esbuild%
+2ffreebsd-x64 290ms 
+(cache revalidated)
+npm http fetch GET 
+200 https://registry
+.npmjs.org/@esbuild%
+2fandroid-x64 300ms 
+(cache revalidated)
+npm http fetch GET 
+200 https://registry
+.npmjs.org/@esbuild%
+2flinux-arm64 301ms 
+(cache revalidated)
+npm http fetch GET 
+200 https://registry
+.npmjs.org/@esbuild%
+2fwin32-arm64 69ms 
+(cache revalidated)
+npm http fetch GET 
+200 https://registry
+.npmjs.org/@esbuild%
+2fopenbsd-x64 76ms 
+(cache revalidated)
+npm http fetch GET 
+200 https://registry
+.npmjs.org/nanoid 
+72ms (cache 
+revalidated)
+npm http fetch GET 
+200 https://registry
+.npmjs.org/source-ma
+p-js 77ms (cache 
+revalidated)
+npm http fetch GET 
+200 https://registry
+.npmjs.org/@types%2f
+estree 82ms (cache 
+revalidated)
+npm http fetch GET 
+200 https://registry
+.npmjs.org/@esbuild%
+2ffreebsd-arm64 
+94ms (cache 
+revalidated)
+npm http fetch GET 
+200 https://registry
+.npmjs.org/@esbuild%
+2fandroid-arm64 
+98ms (cache 
+revalidated)
+npm http fetch GET 
+200 https://registry
+.npmjs.org/@esbuild%
+2flinux-mips64el 
+91ms (cache 
+revalidated)
+npm http fetch GET 
+200 https://registry
+.npmjs.org/@esbuild%
+2flinux-loong64 
+97ms (cache 
+revalidated)
+npm http fetch GET 
+200 https://registry
+.npmjs.org/@esbuild%
+2flinux-riscv64 
+97ms (cache 
+revalidated)
+npm http fetch GET 
+200 https://registry
+.npmjs.org/@esbuild%
+2fdarwin-arm64 
+111ms (cache 
+revalidated)
+npm http fetch GET 
+200 https://registry
+.npmjs.org/@rollup%2
+frollup-darwin-arm64
+ 96ms (cache 
+revalidated)
+npm http fetch GET 
+200 https://registry
+.npmjs.org/@rollup%2
+frollup-win32-arm64-
+msvc 85ms (cache 
+revalidated)
+npm http fetch GET 
+200 https://registry
+.npmjs.org/@rollup%2
+frollup-freebsd-arm6
+4 92ms (cache 
+revalidated)
+npm http fetch GET 
+200 https://registry
+.npmjs.org/@rollup%2
+frollup-android-arm6
+4 104ms (cache 
+revalidated)
+npm http fetch GET 
+200 https://registry
+.npmjs.org/@rollup%2
+frollup-linux-arm64-
+gnu 83ms (cache 
+revalidated)
+npm http fetch GET 
+200 https://registry
+.npmjs.org/@rollup%2
+frollup-linux-arm64-
+musl 85ms (cache 
+revalidated)
+npm http fetch GET 
+200 https://registry
+.npmjs.org/@rollup%2
+frollup-android-arm-
+eabi 73ms (cache 
+revalidated)
+npm http fetch GET 
+200 https://registry
+.npmjs.org/@rollup%2
+frollup-linux-arm-gn
+ueabihf 72ms (cache 
+revalidated)
+npm http fetch GET 
+200 https://registry
+.npmjs.org/@rollup%2
+frollup-linux-arm-mu
+sleabihf 91ms 
+(cache revalidated)
+npm http fetch GET 
+200 https://registry
+.npmjs.org/@rollup%2
+frollup-win32-ia32-m
+svc 91ms (cache 
+revalidated)
+npm http fetch GET 
+200 https://registry
+.npmjs.org/@rollup%2
+frollup-linux-loong6
+4-gnu 108ms (cache 
+revalidated)
+npm http fetch GET 
+200 https://registry
+.npmjs.org/@rollup%2
+frollup-win32-x64-gn
+u 95ms (cache 
+revalidated)
+npm http fetch GET 
+200 https://registry
+.npmjs.org/@rollup%2
+frollup-win32-x64-ms
+vc 87ms (cache 
+revalidated)
+npm http fetch GET 
+200 https://registry
+.npmjs.org/@rollup%2
+frollup-linux-s390x-
+gnu 101ms (cache 
+revalidated)
+npm http fetch GET 
+200 https://registry
+.npmjs.org/@rollup%2
+frollup-darwin-x64 
+102ms (cache 
+revalidated)
+npm http fetch GET 
+200 https://registry
+.npmjs.org/@rollup%2
+frollup-linux-riscv6
+4-gnu 112ms (cache 
+revalidated)
+npm http fetch GET 
+200 https://registry
+.npmjs.org/@rollup%2
+frollup-freebsd-x64 
+94ms (cache 
+revalidated)
+npm http fetch GET 
+200 https://registry
+.npmjs.org/@rollup%2
+frollup-linux-ppc64-
+gnu 116ms (cache 
+revalidated)
+npm http fetch GET 
+200 https://registry
+.npmjs.org/@rollup%2
+frollup-linux-riscv6
+4-musl 118ms (cache 
+revalidated)
+npm http fetch GET 
+200 https://registry
+.npmjs.org/@rollup%2
+frollup-linux-x64-gn
+u 79ms (cache 
+revalidated)
+npm http fetch GET 
+200 https://registry
+.npmjs.org/@rollup%2
+frollup-linux-x64-mu
+sl 81ms (cache 
+revalidated)
+npm http fetch GET 
+200 https://registry
+.npmjs.org/@rollup%2
+frollup-openharmony-
+arm64 79ms (cache 
+revalidated)
+npm http fetch GET 
+200 https://registry
+.npmjs.org/is-fullwi
+dth-code-point 76ms 
+(cache revalidated)
+npm http fetch GET 
+200 https://registry
+.npmjs.org/wrap-ansi
+ 77ms (cache 
+revalidated)
+npm http fetch GET 
+200 https://registry
+.npmjs.org/strip-ans
+i 78ms (cache 
+revalidated)
+npm http fetch GET 
+200 https://registry
+.npmjs.org/emoji-reg
+ex 81ms (cache 
+revalidated)
+npm http fetch GET 
+200 https://registry
+.npmjs.org/strip-ans
+i 86ms (cache 
+revalidated)
+npm http fetch GET 
+200 https://registry
+.npmjs.org/ansi-rege
+x 59ms (cache 
+revalidated)
+npm http fetch GET 
+200 https://registry
+.npmjs.org/ansi-styl
+es 61ms (cache 
+revalidated)
+npm http fetch GET 
+200 https://registry
+.npmjs.org/color-con
+vert 65ms (cache 
+revalidated)
+npm http fetch GET 
+200 https://registry
+.npmjs.org/color-nam
+e 61ms (cache 
+revalidated)
+npm verbose type 
+range
+npm verbose stack 
+@google/genai: No 
+matching version 
+found for @google/ge
+nai@^0.1.2.
+npm verbose stack   
+  at module.exports 
+(C:\Program Files\no
+dejs\node_modules\np
+m\node_modules\npm-p
+ick-manifest\lib\ind
+ex.js:215:23)
+npm verbose stack   
+  at RegistryFetcher
+.manifest 
+(C:\Program Files\no
+dejs\node_modules\np
+m\node_modules\pacot
+e\lib\registry.js:13
+0:54)
+npm verbose stack   
+  at async 
+#fetchManifest 
+(C:\Program Files\no
+dejs\node_modules\np
+m\node_modules\@npmc
+li\arborist\lib\arbo
+rist\build-ideal-tre
+e.js:1202:20)
+npm verbose stack   
+  at async 
+#nodeFromEdge 
+(C:\Program Files\no
+dejs\node_modules\np
+m\node_modules\@npmc
+li\arborist\lib\arbo
+rist\build-ideal-tre
+e.js:1040:19)
+npm verbose stack   
+  at async 
+#buildDepStep 
+(C:\Program Files\no
+dejs\node_modules\np
+m\node_modules\@npmc
+li\arborist\lib\arbo
+rist\build-ideal-tre
+e.js:904:11)
+npm verbose stack   
+  at async Arborist.
+buildIdealTree 
+(C:\Program Files\no
+dejs\node_modules\np
+m\node_modules\@npmc
+li\arborist\lib\arbo
+rist\build-ideal-tre
+e.js:181:7)
+npm verbose stack   
+  at async 
+Promise.all (index 
+1)
+npm verbose stack   
+  at async 
+Arborist.reify 
+(C:\Program Files\no
+dejs\node_modules\np
+m\node_modules\@npmc
+li\arborist\lib\arbo
+rist\reify.js:131:5)
+npm verbose stack   
+  at async 
+Install.exec 
+(C:\Program Files\no
+dejs\node_modules\np
+m\lib\commands\insta
+ll.js:150:5)
+npm verbose stack   
+  at async Npm.exec 
+(C:\Program Files\no
+dejs\node_modules\np
+m\lib\npm.js:207:9)
+npm error code 
+ETARGET
+npm error notarget 
+No matching version 
+found for @google/ge
+nai@^0.1.2.
+npm error notarget 
+In most cases you 
+or one of your 
+dependencies are 
+requesting
+npm error notarget 
+a package version 
+that doesn't exist.
+npm verbose cwd 
+D:\Hire
+npm verbose os 
+Windows_NT 
+10.0.26200
+npm verbose node 
+v22.20.0
+npm verbose npm  
+v10.9.3
+npm verbose exit 1
+npm verbose code 1
+npm error A 
+complete log of 
+this run can be 
+found in: C:\Users\s
+uvra\AppData\Local\n
+pm-cache\_logs\2025-
+12-13T07_44_09_031Z-
+debug-0.log

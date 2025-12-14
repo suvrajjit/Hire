@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ScrollSequence from './ScrollSequence';
 import Orb from './Orb';
 import CircularGallery from './CircularGallery';
+import MagicBento from './MagicBento/MagicBento';
 
 interface HomeProps {
   onStart: () => void;
@@ -71,9 +72,30 @@ const Home: React.FC<HomeProps> = ({ onStart }) => {
             <Orb hoverIntensity={0.4} rotateOnHover={true} hue={0} forceHoverState={false} />
           </div>
 
-          {/* Text Removed as requested */}
+      {/* Text Removed as requested */}
         </div>
       </div>
+
+       {/* Magic Bento Grid Section */}
+       <div className="relative z-20 w-full pt-20 pb-20">
+          <div className="container mx-auto px-4 text-center mb-10">
+               <h2 className="text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-600 tracking-tighter mb-4">
+                  SYSTEM MODULES
+               </h2>
+          </div>
+          <MagicBento 
+            textAutoHide={true}
+            enableStars={true}
+            enableSpotlight={true}
+            enableBorderGlow={true}
+            enableTilt={false}
+            enableMagnetism={true}
+            clickEffect={true}
+            spotlightRadius={600}
+            particleCount={12}
+            glowColor="0, 255, 255"
+          />
+       </div>
       
       {/* Success Stories Section */}
       <div className="relative z-20 w-full bg-gradient-to-t from-black via-black to-transparent pt-32 pb-20">

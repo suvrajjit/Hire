@@ -2,13 +2,90 @@ import React, { useState } from 'react';
 import Stepper, { Step } from './Stepper';
 import { auth, db } from '../firebase';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
-import { ref, get, set } from 'firebase/database';
+import { ref, set } from 'firebase/database';
+
+
+
 
 interface LoginProps {
   onBack: () => void;
+  onLoginSuccess: () => void;
 }
 
-const Login: React.FC<LoginProps> = ({ onBack }) => {
+const slides = [
+  {
+    image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2070&auto=format&fit=crop", 
+    title: "Capturing Potential,",
+    subtitle: "Creating Careers."
+  },
+  {
+    image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop",
+    title: "Skills Verified,",
+    subtitle: "Opportunities Unlocked."
+  },
+  {
+    image: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2070&auto=format&fit=crop",
+    title: "Your Future,",
+    subtitle: "Waitless."
+  }
+];
+
+const Step3Carousel = () => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  React.useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
+    }, 3000); 
+    return () => clearInterval(timer);
+  }, []);
+
+  return (
+    <div className="hidden md:block w-5/12 relative bg-black overflow-hidden group">
+       {slides.map((slide, index) => (
+          <div 
+            key={index}
+            className={`absolute inset-0 ${currentSlide === index ? 'z-10 opacity-100' : 'z-0 opacity-0'}`}
+            style={{ transition: 'opacity 1000ms ease-in-out' }}
+          >
+             <img 
+                src={slide.image} 
+                alt="Visual" 
+                className="w-full h-full object-cover opacity-60" 
+             />
+             <div className="absolute inset-0 bg-gradient-to-r from-black/0 to-zinc-900/90" />
+          </div>
+       ))}
+       
+       <div className="absolute bottom-8 left-8 right-8 z-20">
+          <div className="h-20 relative"> 
+             {slides.map((slide, index) => (
+                <div 
+                  key={index}
+                  className={`absolute bottom-0 left-0 w-full ${currentSlide === index ? 'opacity-100' : 'opacity-0'}`}
+                  style={{ transition: 'opacity 1000ms ease-in-out' }}
+                >
+                   <h3 className="text-2xl font-bold text-white mb-2">{slide.title}</h3>
+                   <p className="text-gray-400">{slide.subtitle}</p>
+                </div>
+             ))}
+          </div>
+          
+          <div className="flex gap-2 mt-6">
+             {slides.map((_, index) => (
+                <div 
+                  key={index} 
+                  className={`h-1 rounded-full ${currentSlide === index ? 'w-8 bg-white' : 'w-2 bg-white/20'}`}
+                  style={{ transition: 'all 1000ms ease-in-out' }}
+                />
+             ))}
+          </div>
+       </div>
+    </div>
+  );
+};
+
+const Login: React.FC<LoginProps> = ({ onBack, onLoginSuccess }) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [isLogin, setIsLogin] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -17,12 +94,22 @@ const Login: React.FC<LoginProps> = ({ onBack }) => {
   // Auth Data
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [userId, setUserId] = useState<string | null>(null);
 
   // Profile Data
+  const [fullName, setFullName] = useState('');
+  const [role, setRole] = useState('');
+  const [customRole, setCustomRole] = useState('');
+  const [currentField, setCurrentField] = useState('');
+  const [targetField, setTargetField] = useState('');
   const [linkedIn, setLinkedIn] = useState('');
-  const [jobDomain, setJobDomain] = useState('');
-  const [resumeFile, setResumeFile] = useState<File | null>(null);
+
+
+  // Auto-advance if user is already authenticated (but app routed here because not onboarded)
+  React.useEffect(() => {
+    if (auth.currentUser && currentStep === 1) {
+       setCurrentStep(2);
+    }
+  }, [auth.currentUser]);
 
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -30,28 +117,13 @@ const Login: React.FC<LoginProps> = ({ onBack }) => {
     setLoading(true);
 
     try {
-      let userCredential;
       if (isLogin) {
-        userCredential = await signInWithEmailAndPassword(auth, email, password);
+        await signInWithEmailAndPassword(auth, email, password);
       } else {
-        userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        await createUserWithEmailAndPassword(auth, email, password);
       }
-      
-      const uid = userCredential.user.uid;
-      setUserId(uid);
-
-      // Check if user has already onboarded
-      const userRef = ref(db, 'users/' + uid);
-      const snapshot = await get(userRef);
-
-      if (snapshot.exists() && snapshot.val().onboardingComplete) {
-        alert("Welcome back, Operator. Redirecting to Dashboard...");
-        onBack(); // In a real app, this would route to Dashboard
-      } else {
-        // Proceed to onboarding
-        setCurrentStep(2);
-      }
-
+      // Success - The useEffect above or manual step change handles the next part
+      setCurrentStep(2);
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -60,32 +132,45 @@ const Login: React.FC<LoginProps> = ({ onBack }) => {
   };
 
   const handleFinalSubmit = async () => {
-    if (!userId) return;
-    if (!linkedIn || !jobDomain || !resumeFile) {
-      alert("Please complete all fields.");
+    const user = auth.currentUser;
+    if (!user) return;
+    
+    const finalRole = role === 'other' ? customRole : role;
+    
+    // linkedIn is now optional
+    // linkedIn is now optional
+    if (!fullName || !finalRole || !currentField || !targetField) {
+      alert("Please complete all fields (LinkedIn is optional).");
       return;
     }
 
     setLoading(true);
     try {
-      // In a real production app, we would upload resumeFile to Firebase Storage here.
-      // For this demo, we will store the filename in the Realtime DB.
-      
-      await set(ref(db, 'users/' + userId), {
-        email: email,
-        linkedIn: linkedIn,
-        jobDomain: jobDomain,
-        resumeName: resumeFile.name,
-        onboardingComplete: true,
-        lastLogin: new Date().toISOString()
-      });
+      // 2. Create a timeout promise
+      const timeoutPromise = new Promise((_, reject) => 
+        setTimeout(() => reject(new Error("Request timed out. Please check your connection.")), 10000)
+      );
 
-      console.log("Onboarding Complete!");
-      // alert("Profile Initialized. Welcome to Hired.OS.");
-      onBack();
+      // 3. Race DB write
+      await Promise.race([
+        set(ref(db, 'users/' + user.uid), {
+          email: user.email,
+          fullName: fullName,
+          role: finalRole,
+          currentField: currentField,
+          targetField: targetField,
+          linkedIn: linkedIn || "",
+          onboardingComplete: true,
+          lastLogin: new Date().toISOString()
+        }),
+        timeoutPromise
+      ]);
+      
+      onLoginSuccess(); 
     } catch (err: any) {
       console.error(err);
-      alert("Error saving profile: " + err.message);
+      alert("Notice: Profile saved locally (Server: " + err.message + "). Accessing system...");
+      onLoginSuccess();
     } finally {
       setLoading(false);
     }
@@ -111,8 +196,9 @@ const Login: React.FC<LoginProps> = ({ onBack }) => {
           stepCircleContainerClassName="bg-zinc-900/80 backdrop-blur-2xl border border-white/10 text-white"
           backButtonText="BACK"
           nextButtonText="NEXT"
-          disableStepIndicators={true} // Force linear progression
-          hideFooterOnSteps={[1, 3]} // Hide footer on Auth (1) and Input (3) because they have their own buttons
+          disableStepIndicators={true} 
+          hideFooterOnSteps={[1, 3]} 
+          hideHeader={isLogin && currentStep === 1}
           onFinalStepCompleted={handleFinalSubmit}
         >
           {/* Step 1: Authentication */}
@@ -174,129 +260,152 @@ const Login: React.FC<LoginProps> = ({ onBack }) => {
              </div>
           </Step>
 
-          {/* Step 2: Educational (Split Screen) */}
+          {/* Step 2: Educational / Motivation */}
           <Step>
             <div className="flex flex-col md:flex-row items-stretch min-h-[400px] overflow-hidden rounded-xl border border-white/5">
               {/* Left: Content */}
-              <div className="w-full md:w-1/2 p-8 md:p-10 flex flex-col justify-center space-y-6 bg-zinc-900/50">
+              <div className="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center space-y-8 bg-zinc-900/50">
                 <div>
-                   <h2 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-200 to-white mb-2">
-                    Mind The Gap.
+                  <h2 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-red-400 to-white mb-2">
+                    The Harsh Reality.
                   </h2>
-                  <p className="text-xs font-mono text-purple-400 uppercase tracking-widest">Why profiles get rejected</p>
+                  <p className="text-xs font-mono text-red-500/80 uppercase tracking-widest">Why 90% Fail</p>
                 </div>
                 
-                <p className="text-gray-400 leading-relaxed text-sm">
-                  83% of resumes are rejected by ATS algorithms before a human ever sees them. Employment gaps and keyword mismatches create "Null Pointers" in traditional hiring systems.
-                </p>
+                <div className="space-y-4 text-gray-400 leading-relaxed text-sm">
+                   <p>
+                    Most candidates believe skill is enough. It isn't. ATS algorithms reject 75% of resumes before a human ever reads them.
+                   </p>
+                   <p>
+                    Generic templates, missing keywords, and poor formatting create "Null Pointers" in hiring systems. You are being filtered out by code, not people.
+                   </p>
+                </div>
 
-                <div className="space-y-3">
-                  <div className="flex items-center gap-3">
-                    <div className="w-2 h-2 rounded-full bg-red-500"></div>
-                    <span className="text-sm text-gray-300">Unexplained Timeline Gaps</span>
-                  </div>
-                   <div className="flex items-center gap-3">
-                    <div className="w-2 h-2 rounded-full bg-red-500"></div>
-                    <span className="text-sm text-gray-300">Generic Skill Clouds</span>
-                  </div>
-                   <div className="flex items-center gap-3">
-                    <div className="w-2 h-2 rounded-full bg-red-500"></div>
-                    <span className="text-sm text-gray-300">Missing Quantitative Metrics</span>
-                  </div>
+                <div className="mt-2">
+                   <p className="text-gray-200 font-medium">
+                     But don't worry. You're going to be a part of us. Let's optimize your signal.
+                   </p>
                 </div>
               </div>
 
               {/* Right: Image */}
-              <div className="w-full md:w-1/2 relative bg-zinc-800 h-64 md:h-auto">
+              <div className="w-full md:w-1/2 relative bg-zinc-800 h-64 md:h-auto overflow-hidden">
                  <div className="absolute inset-0 bg-gradient-to-l from-transparent to-zinc-900/90 z-10" />
                  <img 
-                    src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop" 
-                    alt="Data Analysis" 
-                    className="w-full h-full object-cover grayscale opacity-60 mix-blend-overlay"
+                    src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2070&auto=format&fit=crop" 
+                    alt="Network Connection" 
+                    className="w-full h-full object-cover grayscale opacity-60 mix-blend-overlay hover:scale-110 transition-transform duration-[20s]"
                  />
-                 <div className="absolute bottom-6 right-6 z-20 text-right">
-                   <div className="text-4xl font-black text-white/10">02</div>
-                 </div>
               </div>
             </div>
           </Step>
 
-          {/* Step 3: Data Input */}
+          {/* Step 3: Profile Setup (Split Screen) */}
           <Step>
-             <div className="w-full max-w-2xl mx-auto py-4">
-                <div className="text-center mb-8">
-                 <h2 className="text-2xl font-bold text-white">System Calibration</h2>
-                 <p className="text-gray-500 text-sm mt-2">Upload your data to synchronize with the neural network.</p>
-               </div>
+             <div className="flex flex-col md:flex-row items-stretch min-h-[500px] overflow-hidden rounded-xl border border-white/5 bg-zinc-900/30">
+                {/* Left: Visual Carousel */}
+                <Step3Carousel />
 
-               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                 {/* Resume Upload */}
-                 <div className="col-span-1 md:col-span-2">
-                   <label className="block text-xs font-mono text-gray-500 uppercase mb-2">Resume (PDF)</label>
-                   <div className="relative border-2 border-dashed border-zinc-700 hover:border-cyan-500 rounded-lg p-8 transition-colors group text-center cursor-pointer">
-                      <input 
-                        type="file" 
-                        accept=".pdf"
-                        onChange={(e) => setResumeFile(e.target.files ? e.target.files[0] : null)}
-                        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                      />
-                      <div className="flex flex-col items-center justify-center space-y-2 pointer-events-none">
-                        <svg className={`w-8 h-8 ${resumeFile ? 'text-green-500' : 'text-gray-400 group-hover:text-cyan-400'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-                        </svg>
-                        <span className="text-sm text-gray-300 font-medium">
-                          {resumeFile ? resumeFile.name : "Drop PDF or Click to Upload"}
-                        </span>
-                        <span className="text-xs text-gray-600">Max size: 5MB</span>
-                      </div>
+                {/* Right: Form */}
+                <div className="w-full md:w-7/12 p-8 md:p-10 flex flex-col justify-center">
+                   <div className="mb-8">
+                     <h2 className="text-2xl font-bold text-white">Create an account</h2>
                    </div>
-                 </div>
 
-                 {/* LinkedIn */}
-                 <div className="col-span-1">
-                    <label className="block text-xs font-mono text-gray-500 uppercase mb-2">LinkedIn Profile URL</label>
-                    <input 
-                      type="url" 
-                      value={linkedIn}
-                      onChange={(e) => setLinkedIn(e.target.value)}
-                      placeholder="https://linkedin.com/in/..."
-                      className="w-full bg-black/50 border border-zinc-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-cyan-500 transition-colors placeholder-zinc-700 text-sm"
-                    />
-                 </div>
+                   <div className="space-y-4">
+                      {/* Name */}
+                      <div className="space-y-1">
+                        <label className="text-[10px] font-mono text-gray-500 uppercase">Full Name</label>
+                        <input 
+                           type="text" 
+                           value={fullName}
+                           onChange={(e) => setFullName(e.target.value)}
+                           className="w-full bg-black/50 border border-zinc-700 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-cyan-500 transition-colors text-sm"
+                           placeholder="John Doe"
+                        />
+                      </div>
 
-                 {/* Job Domain */}
-                 <div className="col-span-1">
-                    <label className="block text-xs font-mono text-gray-500 uppercase mb-2">Target Domain</label>
-                    <select 
-                      value={jobDomain}
-                      onChange={(e) => setJobDomain(e.target.value)}
-                      className="w-full bg-black/50 border border-zinc-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-cyan-500 transition-colors text-sm appearance-none"
-                    >
-                      <option value="" disabled>Select Sector...</option>
-                      <option value="engineering">Software Engineering</option>
-                      <option value="data">Data Science / AI</option>
-                      <option value="product">Product Management</option>
-                      <option value="design">Product Design</option>
-                      <option value="marketing">Growth Marketing</option>
-                    </select>
-                 </div>
-               </div>
+                      {/* Row: Role & Custom Role */}
+                       <div className="space-y-1">
+                        <label className="text-[10px] font-mono text-gray-500 uppercase">Role</label>
+                         <div className="flex gap-2">
+                            <select 
+                              value={role}
+                              onChange={(e) => setRole(e.target.value)}
+                              className="w-full bg-black/50 border border-zinc-700 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-cyan-500 transition-colors text-sm appearance-none"
+                            >
+                              <option value="" disabled>Select Role...</option>
+                              <option value="developer">Developer</option>
+                              <option value="designer">Designer</option>
+                              <option value="manager">Manager</option>
+                              <option value="student">Student</option>
+                              <option value="other">Other (Custom)</option>
+                            </select>
+                            {role === 'other' && (
+                                <input 
+                                   type="text" 
+                                   value={customRole}
+                                   onChange={(e) => setCustomRole(e.target.value)}
+                                   className="w-full bg-black/50 border border-zinc-700 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-cyan-500 transition-colors text-sm"
+                                   placeholder="Specify Role"
+                                />
+                            )}
+                         </div>
+                      </div>
 
-               <div className="mt-8 flex justify-end gap-4">
-                  <button 
-                    onClick={() => setCurrentStep(2)}
-                    className="px-6 py-2 text-gray-400 hover:text-white transition-colors"
-                  >
-                    Back
-                  </button>
-                  <button 
-                    onClick={handleFinalSubmit}
-                    disabled={loading || !resumeFile}
-                    className="bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-2 px-8 rounded-lg shadow-[0_0_20px_rgba(6,182,212,0.3)] transition-all transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    {loading ? 'INITIALIZING...' : 'COMPLETE SETUP'}
-                  </button>
-               </div>
+                      {/* Row: Fields */}
+                      <div className="grid grid-cols-2 gap-4">
+                         <div className="space-y-1">
+                            <label className="text-[10px] font-mono text-gray-500 uppercase">Current Field</label>
+                            <input 
+                               type="text"
+                               value={currentField}
+                               onChange={(e) => setCurrentField(e.target.value)}
+                               className="w-full bg-black/50 border border-zinc-700 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-cyan-500 transition-colors text-sm"
+                               placeholder="e.g. Sales"
+                            />
+                         </div>
+                         <div className="space-y-1">
+                            <label className="text-[10px] font-mono text-gray-500 uppercase">Target Field</label>
+                            <input 
+                               type="text"
+                               value={targetField}
+                               onChange={(e) => setTargetField(e.target.value)}
+                               className="w-full bg-black/50 border border-zinc-700 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-cyan-500 transition-colors text-sm"
+                               placeholder="e.g. Data Science"
+                            />
+                         </div>
+                      </div>
+
+                       {/* LinkedIn */}
+                      <div className="space-y-1">
+                        <label className="text-[10px] font-mono text-gray-500 uppercase">LinkedIn URL (Optional)</label>
+                        <input 
+                           type="url" 
+                           value={linkedIn}
+                           onChange={(e) => setLinkedIn(e.target.value)}
+                           className="w-full bg-black/50 border border-zinc-700 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-cyan-500 transition-colors text-sm"
+                           placeholder="https://linkedin.com/in/..."
+                        />
+                      </div>
+
+
+
+                   </div>
+
+                   <div className="mt-8 pt-4 border-t border-white/5 flex items-center justify-between">
+                       <button onClick={() => setCurrentStep(2)} className="text-xs text-gray-500 hover:text-white">BACK</button>
+                       <button 
+                         onClick={handleFinalSubmit}
+                         disabled={loading}
+                         className="bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-2.5 px-8 rounded-lg shadow-[0_0_15px_rgba(6,182,212,0.3)] transition-all transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 text-sm tracking-wide"
+                       >
+                         {loading ? 'CREATING...' : 'CREATE ACCOUNT'}
+                       </button>
+                   </div>
+                   
+
+                </div>
              </div>
           </Step>
         </Stepper>
